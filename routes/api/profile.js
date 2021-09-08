@@ -75,7 +75,6 @@ router.post('/',
             if (status) profileFields.status = status;
             if (githubusername) profileFields.githubusername = githubusername;
             if (skills) {
-                console.log(skills)
                 profileFields.skills = Array.isArray(skills) ? skills : skills.split(',').map(skill => skill.trim());
             }
 
@@ -112,23 +111,17 @@ router.post('/',
         }
 });
 
-//@route    GET api/profile
-//@desc     Get all user profiles route
-//@access   Public
+// @route    GET api/profile
+// @desc     Get all profiles
+// @access   Public
 router.get('/', async (req, res) => {
     try {
         const profiles = await Profile.find().populate('user', ['name', 'avatar']);
-        if (!profiles) {
-            return res.status(400).json({ msg: 'No profile for this user' });
-        }
-
         res.json(profiles);
-
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
-
 });
 
 //@route    GET api/profile/user/user_id

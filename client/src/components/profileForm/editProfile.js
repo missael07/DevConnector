@@ -40,7 +40,7 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, history, ge
             instagram: loading || !profile.social ? '' : profile.social.instagram,
             githubusername: loading || !profile.githubusername ? '' : profile.githubusername,
         })
-    }, [loading])
+    }, [loading, getCurrentProfile])
     const {
         company,
         website,
@@ -61,7 +61,6 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, history, ge
     const onSubmit = async e => {
         e.preventDefault();
         createProfile(formData, history, true);
-        console.log(formData);
     }
 
     return (
@@ -157,11 +156,11 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, history, ge
                 </Fragment>}
 
                 <button type="submit" className="btn btn-primary my-1" >
-                    <i class="fas fa-check-circle"></i>{' '}
+                    <i className="fas fa-check-circle"></i>{' '}
                     Submit
                 </button>
                 <Link className="btn btn-light my-1" to="/dashboard">
-                    <i class="fas fa-chevron-circle-left"></i>{' '}
+                    <i className="fas fa-chevron-circle-left"></i>{' '}
                     Go Back
                 </Link>
             </form>

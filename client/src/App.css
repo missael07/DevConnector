@@ -293,7 +293,9 @@ button {
   padding: 1rem;
   text-align: left;
 }
-
+td {
+  word-wrap: break-word;
+}
 .table th {
   background: var(--light-color);
 }

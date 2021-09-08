@@ -41,8 +41,7 @@ router.post('/',
             check('status', 'Status is required').not().isEmpty(),
             check('skills', 'Skills is required').not().isEmpty()
         ]
-    ],
-    async (req, res) => {
+    ], async (req, res) => {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -76,11 +75,9 @@ router.post('/',
             if (status) profileFields.status = status;
             if (githubusername) profileFields.githubusername = githubusername;
             if (skills) {
-                profileFields.skills = skills.split(',').map(skill => skill.trim());
+                console.log(skills)
+                profileFields.skills = Array.isArray(skills) ? skills : skills.split(',').map(skill => skill.trim());
             }
-
-            console.log(profileFields.skills);
-
 
             profileFields.social = {};
             if (youtube) profileFields.social.youtube = youtube;
@@ -113,8 +110,7 @@ router.post('/',
             console.error(err.message);
             res.status(500).send('Server Error');
         }
-
-    });
+});
 
 //@route    GET api/profile
 //@desc     Get all user profiles route
@@ -163,7 +159,7 @@ router.get('/user/:user_id', async (req, res) => {
 router.delete('/', auth, async (req, res) => {
     try {
         //@todo - remove users posts
-        await Posts.findOneAndRemove({ user: req.user.id });
+        await Posts.deleteMany({ user: req.user.id });
         // Remove profile
         await Profile.findOneAndRemove({ user: req.user.id });
         //Remove User
